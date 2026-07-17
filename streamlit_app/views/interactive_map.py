@@ -1,6 +1,7 @@
 """
-pages/2_🗺️_Interactive_Map.py — combat directions map with search + time animation.
+views/interactive_map.py — combat directions map with search + time animation.
 صفحة الخريطة التفاعلية: بحث عن المواقع + خريطة متحركة عبر الزمن + خريطة إجمالية ثابتة.
+(لا يوجد هنا st.set_page_config — يُستدعى مرة واحدة فقط من app.py الموجّه الرئيسي)
 """
 
 import pandas as pd
@@ -11,8 +12,6 @@ from common import (
     COLOR_SEQUENTIAL, LOCATION_COORDS, LOCATION_LABELS_AR, get_data,
     init_sidebar_controls, parse_directions, render_banner, t,
 )
-
-st.set_page_config(page_title="Interactive Map", page_icon="🗺️", layout="wide", initial_sidebar_state="expanded")
 
 df, is_live = get_data()
 ctrl = init_sidebar_controls(df, is_live)

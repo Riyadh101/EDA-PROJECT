@@ -1,6 +1,7 @@
 """
-pages/1_📊_Deep_Analysis.py — detailed charts and the predictive model.
+views/deep_analysis.py — detailed charts and the predictive model.
 صفحة التحليل المتعمق: مقارنة الفئات، خريطة الارتباط، النموذج التنبؤي.
+(لا يوجد هنا st.set_page_config — يُستدعى مرة واحدة فقط من app.py الموجّه الرئيسي)
 """
 
 import numpy as np
@@ -12,8 +13,6 @@ from common import (
     COLOR_DIVERGING, COLOR_SEQUENTIAL, EQUIP_COLS, equip_label_with_icon,
     get_data, init_sidebar_controls, render_banner, t,
 )
-
-st.set_page_config(page_title="Deep Analysis", page_icon="📊", layout="wide", initial_sidebar_state="expanded")
 
 df, is_live = get_data()
 ctrl = init_sidebar_controls(df, is_live)
@@ -90,7 +89,7 @@ st.caption(
     "انحدار خطي بسيط لتوقّع اتجاه الخسائر البشرية التراكمية للأيام القادمة."
 )
 
-forecast_days = st.slider(
+forecast_days = st.number_input(
     "Number of Future Days to Forecast" if lang == "en" else "عدد الأيام المستقبلية للتوقع",
     min_value=7, max_value=90, value=30, step=7, key="forecast_days",
 )
