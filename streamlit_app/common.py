@@ -1,6 +1,6 @@
 """
 common.py — Shared logic used across all pages of the dashboard:
-data loading, translations (EN/AR), constants, theme, and sidebar filters.
+data loading, translations (EN/AR), constants, and sidebar filters.
 ملف مشترك: يحتوي كل الأكواد المستخدمة بأكثر من صفحة (بيانات، ترجمة، ثيم، فلاتر)
 حتى ما نكرر نفس الكود بكل صفحة لحالها.
 """
@@ -159,9 +159,6 @@ T = {
     "en": {
         "nav_hint": "Use the sidebar to switch pages: Overview, Deep Analysis, Interactive Map.",
         "lang_label": "🌐 Language",
-        "theme_label": "🎨 Theme",
-        "theme_light": "☀️ Light",
-        "theme_dark": "🌙 Dark",
         "about_title": "ℹ️ About the Data",
         "about_body": (
             "This dashboard shows real daily data documenting officially reported "
@@ -196,9 +193,6 @@ T = {
     "ar": {
         "nav_hint": "استخدم الشريط الجانبي للتنقل بين الصفحات: نظرة عامة، تحليل متعمق، خريطة تفاعلية.",
         "lang_label": "🌐 اللغة",
-        "theme_label": "🎨 المظهر",
-        "theme_light": "☀️ فاتح",
-        "theme_dark": "🌙 داكن",
         "about_title": "ℹ️ عن البيانات",
         "about_body": (
             "تعرض هذه اللوحة بيانات يومية حقيقية توثّق الخسائر الروسية المُعلنة رسميًا "
@@ -238,31 +232,6 @@ def t(key: str, lang: str, **kwargs) -> str:
     return text.format(**kwargs) if kwargs else text
 
 
-# =========================================================
-# Theme (light/dark) — CSS variable override only, no direction/
-# position properties touched, to avoid re-triggering the earlier
-# RTL rendering bug that affected slider widgets.
-# ثيم فاتح/داكن: نغيّر بس ألوان الخلفية والنص، ما نلمس أي خاصية اتجاه (direction) أو
-# موضع (position) نهائيًا، تفاديًا لتكرار مشكلة الـ RTL القديمة مع الـ sliders
-# =========================================================
-def apply_theme(theme: str):
-    if theme == "dark":
-        css = """
-        <style>
-        .stApp { background-color: #0e1117; color: #f0f2f6; }
-        section[data-testid="stSidebar"] { background-color: #161a23; }
-        div[data-testid="stMetric"] { background-color: #1c2029; border-radius: 8px; padding: 10px; }
-        </style>
-        """
-    else:
-        css = """
-        <style>
-        .stApp { background-color: #ffffff; color: #262730; }
-        div[data-testid="stMetric"] { background-color: #f7f7f9; border-radius: 8px; padding: 10px; }
-        </style>
-        """
-    st.markdown(css, unsafe_allow_html=True)
-
 
 def render_banner(title: str, subtitle: str):
     """بانر/شريط علوي بسيط بتدرج لوني بدل عنوان نصي عادي فقط."""
@@ -297,20 +266,13 @@ def render_kpi_card(label: str, value: str, delta: str, color: str):
 
 
 def init_sidebar_controls(df: pd.DataFrame, is_live: bool):
-    """يُستدعى بأول كل صفحة: يعرض قائمة اللغة/الثيم + معلومات البيانات + الفلاتر
+    """يُستدعى بأول كل صفحة: يعرض قائمة اللغة + معلومات البيانات + الفلاتر
     (dropdown + slider + multiselect + تواريخ)، ويرجّع كل القيم المختارة.
     استخدام key= صريح لكل عنصر يضمن بقاء نفس الاختيار وأنت تتنقل بين الصفحات."""
     lang_choice = st.sidebar.selectbox(
         "🌐 Language / اللغة", options=["English", "العربية"], index=0, key="lang_choice"
     )
     lang = "en" if lang_choice == "English" else "ar"
-
-    theme_choice = st.sidebar.radio(
-        t("theme_label", lang), options=[t("theme_light", lang), t("theme_dark", lang)],
-        horizontal=True, key="theme_choice",
-    )
-    theme = "dark" if theme_choice == t("theme_dark", lang) else "light"
-    apply_theme(theme)
 
     st.sidebar.title(t("about_title", lang))
     st.sidebar.markdown(t("about_body", lang, n_days=len(df)))
@@ -361,7 +323,6 @@ def init_sidebar_controls(df: pd.DataFrame, is_live: bool):
 
     return {
         "lang": lang,
-        "theme": theme,
         "filtered_df": filtered_df,
         "selected_equipment": selected_equipment,
         "trend_category": trend_category,

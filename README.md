@@ -20,7 +20,7 @@ EDA-PROJECT/
 │   └── equipment.json
 ├── streamlit_app/            # Streamlit dashboard folder (multi-page app)
 │   ├── app.py                # Home/Overview page: banner, KPI cards, weekly comparison, annotated timeline
-│   ├── common.py             # Shared code: data loading, translations (EN/AR), theme, sidebar filters
+│   ├── common.py             # Shared code: data loading, translations (EN/AR), sidebar filters
 │   ├── pages/
 │   │   ├── 1_📊_Deep_Analysis.py     # Category comparisons, correlation heatmap, predictive model
 │   │   └── 2_🗺️_Interactive_Map.py   # Searchable + animated map of combat directions
@@ -48,7 +48,7 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-The app opens automatically at `http://localhost:8501`. Use the sidebar to switch pages (**Overview**, **Deep Analysis**, **Interactive Map**) and to change the **Language / اللغة** (English/Arabic) or **Theme** (Light/Dark) — these choices stay in sync across pages.
+The app opens automatically at `http://localhost:8501`. Use the sidebar to switch pages (**Overview**, **Deep Analysis**, **Interactive Map**) and to change the **Language / اللغة** (English/Arabic) — this choice stays in sync across pages. For Light/Dark mode, use Streamlit's own built-in theme switcher (☰ menu → Settings → Theme).
 
 **Dashboard features:**
 - Multi-page layout: Overview, Deep Analysis, Interactive Map
@@ -59,7 +59,7 @@ The app opens automatically at `http://localhost:8501`. Use the sidebar to switc
 - An **interactive, searchable, animated map** of reported combat directions (month-by-month playback), geocoded from the free-text `greatest_losses_direction` column
 - A simple linear-regression **predictive model** with an adjustable forecast horizon
 - **Live data**: fetches the latest data directly from GitHub on load (refreshed hourly), with automatic fallback to the local `clean_data.csv` snapshot if offline
-- Light/Dark theme toggle
+- Light/Dark mode: use Streamlit's own built-in theme switcher (☰ menu → Settings → Theme) — no custom toggle needed
 
 ### Sidebar filters explained
 
