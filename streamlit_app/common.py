@@ -302,7 +302,7 @@ def init_sidebar_controls(df: pd.DataFrame, is_live: bool):
     )
 
     max_daily = int(df["personnel_daily_new"].max())
-    min_daily_threshold = st.sidebar.slider(
+    min_daily_threshold = st.sidebar.number_input(
         t("min_threshold", lang), min_value=0, max_value=max_daily, value=0, step=10, key="min_daily_threshold",
     )
     st.sidebar.caption(t("min_threshold_help", lang))
