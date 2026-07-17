@@ -61,6 +61,17 @@ The app opens automatically at `http://localhost:8501`. Use the sidebar to switc
 - **Live data**: fetches the latest data directly from GitHub on load (refreshed hourly), with automatic fallback to the local `clean_data.csv` snapshot if offline
 - Light/Dark theme toggle
 
+### Sidebar filters explained
+
+| Filter | Type | What it does |
+|---|---|---|
+| **Start Date / End Date** | Date pickers | Restricts every chart, KPI, and the map to only the days within this range. |
+| **Equipment Categories to Compare** | Multiselect | Choose which equipment types appear in the multi-line comparison chart and the correlation heatmap on the Deep Analysis page. |
+| **Equipment Category for Trend Chart** | Dropdown | Picks a single category to show its own daily-new-losses bar chart. |
+| **Minimum Daily Personnel Losses** | Slider | Filters the whole dashboard down to days where at least this many personnel losses were reported *on that single day* (not the running total). Raising it isolates unusually severe days — e.g. major battles — so you can see how the charts and map narrow down to just those days. Set it back to 0 to see all days again. |
+
+All filters apply across every page (Overview, Deep Analysis, Interactive Map) since they live in the shared sidebar.
+
 ## 🔎 Main Questions Explored
 
 - How did personnel and equipment losses evolve over time?

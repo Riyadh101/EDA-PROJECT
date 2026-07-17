@@ -180,6 +180,7 @@ T = {
         "equip_multiselect": "Equipment Categories to Compare",
         "trend_dropdown": "Equipment Category for Trend Chart",
         "min_threshold": "Minimum Daily Personnel Losses (to isolate critical days)",
+        "min_threshold_help": "Filters the whole dashboard down to days where at least this many personnel losses were reported *on that single day* (not the running total). Raise it to isolate unusually severe days — e.g. major battles — and see how the charts and map narrow down to just those days.",
         "sidebar_footer": "Individual Data Analysis Project — EDA & Streamlit Dashboard",
         "sidebar_sticky_note": "📌 Filters above stay visible while you scroll the page.",
         "no_data_warning": "No data matches the selected filters. Try widening the date range or lowering the minimum threshold.",
@@ -216,6 +217,7 @@ T = {
         "equip_multiselect": "فئات المعدات للمقارنة",
         "trend_dropdown": "فئة معدات لعرض اتجاهها الزمني",
         "min_threshold": "حد أدنى للخسائر البشرية اليومية (لتحديد الأيام الحرجة)",
+        "min_threshold_help": "يفلتر كل لوحة المعلومات لتعرض بس الأيام اللي سُجّل فيها هذا الحد أو أكثر من الخسائر البشرية *في ذاك اليوم بالتحديد* (مو المجموع التراكمي). زوّد الرقم عشان تعزل الأيام الاستثنائية (زي المعارك الكبرى) وتشوف كيف تتغيّر الرسومات والخريطة لتعرض بس هذي الأيام.",
         "sidebar_footer": "مشروع تحليل بيانات فردي — EDA ولوحة معلومات Streamlit",
         "sidebar_sticky_note": "📌 الفلاتر أعلاه تفضل ظاهرة وأنت تنزل بالصفحة.",
         "no_data_warning": "لا توجد بيانات مطابقة للفلاتر المختارة. حاول توسيع نطاق التاريخ أو تقليل الحد الأدنى.",
@@ -341,6 +343,7 @@ def init_sidebar_controls(df: pd.DataFrame, is_live: bool):
     min_daily_threshold = st.sidebar.slider(
         t("min_threshold", lang), min_value=0, max_value=max_daily, value=0, step=10, key="min_daily_threshold",
     )
+    st.sidebar.caption(t("min_threshold_help", lang))
 
     st.sidebar.caption(t("sidebar_sticky_note", lang))
     st.sidebar.markdown("---")
